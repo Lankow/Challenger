@@ -1,0 +1,262 @@
+{
+  "version": 1,
+  "demo": true,
+  "settings": {
+    "enabled": [
+      "Bieganie",
+      "Rower",
+      "Pływanie"
+    ],
+    "rates": {
+      "Bieganie": 2.5,
+      "Rower": 1,
+      "Pływanie": 10,
+      "Spacer": 1,
+      "Inne": 1
+    },
+    "goals": {
+      "Bieganie": 211,
+      "Rower": 900,
+      "Pływanie": 18
+    },
+    "endDate": "2026-12-31"
+  },
+  "profiles": [
+    {
+      "id": "alex",
+      "name": "Alex",
+      "color": "#75aaff",
+      "apiKey": "1111111111111111111111111111111111111111"
+    },
+    {
+      "id": "jamie",
+      "name": "Jamie",
+      "color": "#75aaff",
+      "apiKey": "2222222222222222222222222222222222222222"
+    },
+    {
+      "id": "morgan",
+      "name": "Morgan",
+      "color": "#75aaff",
+      "apiKey": "3333333333333333333333333333333333333333"
+    }
+  ],
+  "activities": [
+    {
+      "profileId": "alex",
+      "date": "2026-11-02",
+      "sport": "Bieganie",
+      "name": "Demo activity",
+      "distance": 46.92,
+      "seconds": 3600
+    },
+    {
+      "profileId": "alex",
+      "date": "2026-11-04",
+      "sport": "Bieganie",
+      "name": "Demo activity",
+      "distance": 54.74,
+      "seconds": 3600
+    },
+    {
+      "profileId": "alex",
+      "date": "2026-11-05",
+      "sport": "Bieganie",
+      "name": "Demo activity",
+      "distance": 54.74,
+      "seconds": 3600
+    },
+    {
+      "profileId": "alex",
+      "date": "2026-11-02",
+      "sport": "Rower",
+      "name": "Demo activity",
+      "distance": 184.56,
+      "seconds": 3600
+    },
+    {
+      "profileId": "alex",
+      "date": "2026-11-04",
+      "sport": "Rower",
+      "name": "Demo activity",
+      "distance": 215.32,
+      "seconds": 3600
+    },
+    {
+      "profileId": "alex",
+      "date": "2026-11-05",
+      "sport": "Rower",
+      "name": "Demo activity",
+      "distance": 215.32,
+      "seconds": 3600
+    },
+    {
+      "profileId": "alex",
+      "date": "2026-11-02",
+      "sport": "Pływanie",
+      "name": "Demo activity",
+      "distance": 3.78,
+      "seconds": 3600
+    },
+    {
+      "profileId": "alex",
+      "date": "2026-11-04",
+      "sport": "Pływanie",
+      "name": "Demo activity",
+      "distance": 4.41,
+      "seconds": 3600
+    },
+    {
+      "profileId": "alex",
+      "date": "2026-11-05",
+      "sport": "Pływanie",
+      "name": "Demo activity",
+      "distance": 4.41,
+      "seconds": 3600
+    },
+    {
+      "profileId": "jamie",
+      "date": "2026-11-02",
+      "sport": "Bieganie",
+      "name": "Demo activity",
+      "distance": 54.81,
+      "seconds": 3600
+    },
+    {
+      "profileId": "jamie",
+      "date": "2026-11-04",
+      "sport": "Bieganie",
+      "name": "Demo activity",
+      "distance": 63.945,
+      "seconds": 3600
+    },
+    {
+      "profileId": "jamie",
+      "date": "2026-11-05",
+      "sport": "Bieganie",
+      "name": "Demo activity",
+      "distance": 63.945,
+      "seconds": 3600
+    },
+    {
+      "profileId": "jamie",
+      "date": "2026-11-02",
+      "sport": "Rower",
+      "name": "Demo activity",
+      "distance": 149.55,
+      "seconds": 3600
+    },
+    {
+      "profileId": "jamie",
+      "date": "2026-11-04",
+      "sport": "Rower",
+      "name": "Demo activity",
+      "distance": 174.475,
+      "seconds": 3600
+    },
+    {
+      "profileId": "jamie",
+      "date": "2026-11-05",
+      "sport": "Rower",
+      "name": "Demo activity",
+      "distance": 174.475,
+      "seconds": 3600
+    },
+    {
+      "profileId": "jamie",
+      "date": "2026-11-02",
+      "sport": "Pływanie",
+      "name": "Demo activity",
+      "distance": 2.94,
+      "seconds": 3600
+    },
+    {
+      "profileId": "jamie",
+      "date": "2026-11-04",
+      "sport": "Pływanie",
+      "name": "Demo activity",
+      "distance": 3.43,
+      "seconds": 3600
+    },
+    {
+      "profileId": "jamie",
+      "date": "2026-11-05",
+      "sport": "Pływanie",
+      "name": "Demo activity",
+      "distance": 3.43,
+      "seconds": 3600
+    },
+    {
+      "profileId": "morgan",
+      "date": "2026-11-02",
+      "sport": "Bieganie",
+      "name": "Demo activity",
+      "distance": 40.26,
+      "seconds": 3600
+    },
+    {
+      "profileId": "morgan",
+      "date": "2026-11-04",
+      "sport": "Bieganie",
+      "name": "Demo activity",
+      "distance": 46.97,
+      "seconds": 3600
+    },
+    {
+      "profileId": "morgan",
+      "date": "2026-11-05",
+      "sport": "Bieganie",
+      "name": "Demo activity",
+      "distance": 46.97,
+      "seconds": 3600
+    },
+    {
+      "profileId": "morgan",
+      "date": "2026-11-02",
+      "sport": "Rower",
+      "name": "Demo activity",
+      "distance": 222.69,
+      "seconds": 3600
+    },
+    {
+      "profileId": "morgan",
+      "date": "2026-11-04",
+      "sport": "Rower",
+      "name": "Demo activity",
+      "distance": 259.805,
+      "seconds": 3600
+    },
+    {
+      "profileId": "morgan",
+      "date": "2026-11-05",
+      "sport": "Rower",
+      "name": "Demo activity",
+      "distance": 259.805,
+      "seconds": 3600
+    },
+    {
+      "profileId": "morgan",
+      "date": "2026-11-02",
+      "sport": "Pływanie",
+      "name": "Demo activity",
+      "distance": 4.53,
+      "seconds": 3600
+    },
+    {
+      "profileId": "morgan",
+      "date": "2026-11-04",
+      "sport": "Pływanie",
+      "name": "Demo activity",
+      "distance": 5.285,
+      "seconds": 3600
+    },
+    {
+      "profileId": "morgan",
+      "date": "2026-11-05",
+      "sport": "Pływanie",
+      "name": "Demo activity",
+      "distance": 5.285,
+      "seconds": 3600
+    }
+  ]
+}

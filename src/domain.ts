@@ -1,5 +1,5 @@
 export type Profile = { id: string; name: string; color: string; apiKey?: string };
-export type Activity = { id: string; profileId: string; name: string; date: string; sport: string; distance: number; seconds: number; source: 'manual' | 'import' | 'strava' };
+export type Activity = { id: string; profileId: string; name: string; date: string; sport: string; distance: number; seconds: number; source: 'manual' | 'import' | 'app' };
 export const sports = ['Bieganie', 'Rower', 'Pływanie', 'Spacer', 'Inne'];
 export function validateActivity(value: unknown, profileId: string): Activity {
   if (!value || typeof value !== 'object') throw new Error('NieprawidĹ‚owy trening.');
@@ -12,7 +12,7 @@ export function validateActivity(value: unknown, profileId: string): Activity {
 }
 export function total(activities: Activity[]) { return activities.reduce((sum, a) => sum + Math.round(a.distance * 1000), 0) / 1000; }
 export function uniqueActivities(existing: Activity[], incoming: Activity[]) {
-  const key = (a: Activity) => `${a.profileId}|${a.source === 'strava' ? a.id : `${a.date}|${a.sport}|${a.distance}|${a.name}`}`;
+  const key = (a: Activity) => `${a.profileId}|${a.source === 'app' ? a.id : `${a.date}|${a.sport}|${a.distance}|${a.name}`}`;
   const seen = new Set(existing.map(key));
   return incoming.filter(a => { const k = key(a); if (seen.has(k)) return false; seen.add(k); return true; });
 }
