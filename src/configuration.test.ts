@@ -1,3 +1,4 @@
+import {readFileSync} from 'node:fs';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {parseConfiguration} from './configuration';
@@ -16,3 +17,5 @@ test('backup supports keyless hosted profiles and rejects invalid data',()=>{
 test('legacy config remains supported without replacing cached activities',()=>{
  const result=parseConfiguration({version:1,settings,profiles:[{id:'p',name:'A',apiKey:'a'.repeat(40)}]});assert.equal(result.activities,undefined);
 });
+
+test('bundled legacy demo remains importable',()=>{const demo=JSON.parse(readFileSync(new URL('../public/challenger-demo.json',import.meta.url),'utf8'));const result=parseConfiguration(demo);assert.equal(result.activities?.length,demo.activities.length);assert.ok(result.activities?.every(a=>a.source==='app'&&a.id));});
