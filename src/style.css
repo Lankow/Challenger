@@ -35,3 +35,7 @@ nav a:first-child{background:transparent;color:inherit}nav a:hover,nav a:focus{b
 }
 
 .swipe-table{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x pan-y pinch-zoom;cursor:grab}.swipe-table.dragging{cursor:grabbing;user-select:none}.swipe-table:focus-visible{outline:3px solid #68a8e6;outline-offset:3px}
+
+@keyframes spin{to{transform:rotate(360deg)}}.spinning{animation:spin 1s linear infinite}@media(prefers-reduced-motion:reduce){.spinning{animation:none}}
+
+.challenge-dates{display:flex;flex-wrap:wrap;gap:1rem}.challenge-dates .end-date{flex:1;min-width:180px}

@@ -1,9 +1,9 @@
 import { openDB } from 'idb';
 import type { Activity, Profile } from './domain';
 const db = openDB('challenger', 1, { upgrade(db) { db.createObjectStore('state'); } });
-export type Settings = { endDate?: string; enabled: string[]; rates: Record<string, number>; goals?: Record<string, number> };
+export type Settings = { startDate?: string; endDate?: string; enabled: string[]; rates: Record<string, number>; goals?: Record<string, number> };
 export const defaults: Settings = { enabled: ["Bieganie", "Pływanie"], rates: { Bieganie: 2.5, Rower: 1, Pływanie: 10, Spacer: 1, Inne: 1 } };
-export type State = { demo?: boolean; profiles: Profile[]; activities: Activity[]; settings?: Settings };
+export type State = { demo?: boolean; lastUpdated?: string; profiles: Profile[]; activities: Activity[]; settings?: Settings };
 export async function readState(): Promise<State> {
  const state:State=(await (await db).get('state', 'current'))??{profiles:[],activities:[]};
  let changed=false;
