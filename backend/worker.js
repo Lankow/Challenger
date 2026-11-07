@@ -41,8 +41,9 @@ export async function handleRequest(request, upstreamFetch = fetch) {
   try {
     const response = await upstreamFetch(UPSTREAM + url.pathname + url.search, {
       method, headers: {Authorization: authorization, Accept: '*/*'},
-      redirect: 'error', signal: AbortSignal.timeout(25000),
+      redirect: 'manual', signal: AbortSignal.timeout(25000),
     });
+    if (response.status >= 300 && response.status < 400) return error(502, 'Unexpected redirect from Garmin.');
     if (!response.ok) return error(response.status, 'Garmin rejected the request.');
     // Stream only the response; do not persist credentials, activities, or raw errors.
     return new Response(response.body, {status: response.status, headers: {...headers, 'Content-Type': method === 'POST' ? 'text/plain' : 'application/json'}});

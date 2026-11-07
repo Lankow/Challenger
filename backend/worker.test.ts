@@ -5,7 +5,7 @@ import {handleRequest} from './worker.js';
 const path='/personalapitoken-service/personal-api/personal-api-key/token';
 const req=(p=path,method='POST',origin='https://lankow.github.io')=>new Request('https://relay.example'+p,{method,headers:{Origin:origin,Authorization:'ApiKey synthetic'}});
 test('relay allows exact Pages origin and strips upstream cookies',async()=>{
- const r=await handleRequest(req(),async(url:string,opts:RequestInit)=>{assert.equal(url,'https://personal.connectapi.garmin.com'+path);assert.equal(new Headers(opts.headers).get('Origin'),null);assert.equal(new Headers(opts.headers).get('Cookie'),null);assert.equal(opts.redirect,'error');return new Response('token',{headers:{'Set-Cookie':'secret'}});});
+ const r=await handleRequest(req(),async(url:string,opts:RequestInit)=>{assert.equal(url,'https://personal.connectapi.garmin.com'+path);assert.equal(new Headers(opts.headers).get('Origin'),null);assert.equal(new Headers(opts.headers).get('Cookie'),null);assert.equal(opts.redirect,'manual');return new Response('token',{headers:{'Set-Cookie':'secret'}});});
  assert.equal(r.status,200);assert.equal(r.headers.get('Access-Control-Allow-Origin'),'https://lankow.github.io');assert.equal(r.headers.get('Set-Cookie'),null);assert.equal(await r.text(),'token');
 });
 test('relay rejects foreign origins, paths, methods and query injection without forwarding',async()=>{
