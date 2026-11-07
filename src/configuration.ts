@@ -1,11 +1,11 @@
-import { sports, validateActivity, validateChallengeDates, type Activity, type Profile } from './domain';
+import { migrateProfile, sports, validateActivity, validateChallengeDates, type Activity, type Profile } from './domain';
 import type { Settings } from './storage';
-export const plausibleGarminKey=(s:string)=>s.trim().length>0&&s.trim().length<=4096&&!/\s/.test(s.trim());
+export const plausiblePersonalKey=(s:string)=>s.trim().length>0&&s.trim().length<=4096&&!/\s/.test(s.trim());
 export const plausibleToken=(s:string)=>/^[a-fA-F0-9]{40}$/.test(s.trim());
 export function parseConfiguration(value:unknown):{settings:Settings;profiles:Profile[];demo?:boolean;activities?:Activity[]}{
  const x=value as Record<string,unknown>;if(!x||(x.version!==1&&x.version!==2)||!Array.isArray(x.profiles)||!x.settings)throw new Error('Invalid configuration format.');
  const s=x.settings as Settings;if(!Array.isArray(s.enabled)||s.enabled.some(v=>!sports.includes(v))||new Set(s.enabled).size!==s.enabled.length||!s.rates||sports.some(v=>typeof s.rates[v]!=='number'||!Number.isFinite(s.rates[v])||s.rates[v]<0))throw new Error('Invalid scoring settings.');
- const ids=new Set<string>();const profiles=x.profiles.map((v:Profile)=>{if(!v||typeof v.id!=='string'||!v.id||ids.has(v.id)||typeof v.name!=='string'||!v.name.trim()||v.name.length>80||(v.apiKey!==undefined&&typeof v.apiKey!=='string')||(v.garminPersonalKey!==undefined&&(typeof v.garminPersonalKey!=='string'||!plausibleGarminKey(v.garminPersonalKey)))||(x.version===1&&!v.garminPersonalKey&&(typeof v.apiKey!=='string'||!plausibleToken(v.apiKey))))throw new Error('Each profile requires a name and a Garmin personal key (or a legacy access token).');ids.add(v.id);return {id:v.id,name:v.name.trim(),color:'#b2e660',apiKey:v.apiKey?.trim(),garminPersonalKey:v.garminPersonalKey?.trim()}});
+ const ids=new Set<string>();const profiles=x.profiles.map(migrateProfile).map((v:Profile)=>{if(!v||typeof v.id!=='string'||!v.id||ids.has(v.id)||typeof v.name!=='string'||!v.name.trim()||v.name.length>80||(v.apiKey!==undefined&&typeof v.apiKey!=='string')||(v.personalKey!==undefined&&(typeof v.personalKey!=='string'||!plausiblePersonalKey(v.personalKey)))||(x.version===1&&!v.personalKey&&(typeof v.apiKey!=='string'||!plausibleToken(v.apiKey))))throw new Error('Each profile requires a name and a personal key (or a legacy access token).');ids.add(v.id);return {id:v.id,name:v.name.trim(),color:'#b2e660',apiKey:v.apiKey?.trim(),personalKey:v.personalKey?.trim()}});
  if(s.goals&&(typeof s.goals!=='object'||Object.values(s.goals).some(v=>typeof v!=='number'||!Number.isFinite(v)||v<0)))throw new Error('Invalid distance goals.');
  validateChallengeDates(s);
  const demo=x.demo===true;

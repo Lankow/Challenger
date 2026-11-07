@@ -14,7 +14,7 @@ export async function handleRequest(request, upstreamFetch = fetch) {
     headers['Access-Control-Max-Age'] = '3600';
   }
   const error = (status, message) => Response.json({error: message}, {status, headers});
-  if (url.pathname === '/health' && request.method === 'GET') return Response.json({service: 'Challenger Garmin relay', status: 'ok'}, {headers});
+  if (url.pathname === '/health' && request.method === 'GET') return Response.json({service: 'Challenger activity relay', status: 'ok'}, {headers});
   if (origin !== ORIGIN) return error(403, 'Origin not allowed.');
   const method = url.pathname === TOKEN ? 'POST' : url.pathname === ACTIVITIES ? 'GET' : null;
   if (!method) return error(404, 'Unknown endpoint.');
@@ -43,10 +43,10 @@ export async function handleRequest(request, upstreamFetch = fetch) {
       method, headers: {Authorization: authorization, Accept: '*/*'},
       redirect: 'manual', signal: AbortSignal.timeout(25000),
     });
-    if (response.status >= 300 && response.status < 400) return error(502, 'Unexpected redirect from Garmin.');
-    if (!response.ok) return error(response.status, 'Garmin rejected the request.');
+    if (response.status >= 300 && response.status < 400) return error(502, 'Unexpected redirect from the activity service.');
+    if (!response.ok) return error(response.status, 'The activity service rejected the request.');
     // Stream only the response; do not persist credentials, activities, or raw errors.
     return new Response(response.body, {status: response.status, headers: {...headers, 'Content-Type': method === 'POST' ? 'text/plain' : 'application/json'}});
-  } catch { return error(502, 'Cannot reach Garmin. Try again later.'); }
+  } catch { return error(502, 'Cannot reach the activity service. Try again later.'); }
 }
 export default { fetch: request => handleRequest(request) };

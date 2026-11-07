@@ -2,14 +2,13 @@
 
 React, TypeScript and Vite distance challenge dashboard.
 
-## Garmin updates
+## activity updates
 
-Add a Garmin personal API key under Settings > Edit profile, save, then click
-Update in Challenge. Existing profiles need their own Garmin key; legacy access
+Add a personal API key under Settings > Edit profile, save, then click
+Update in Challenge. Existing profiles need their own personal key; legacy access
 and refresh tokens are not used. Demo data must be cleared before live updates.
 
-The integration uses only the official Personal API at
-`https://personal.connectapi.garmin.com`:
+The integration uses only the official Personal API:
 
 - POST `/personalapitoken-service/personal-api/personal-api-key/token`
   with an `Authorization: ApiKey ...` header.
@@ -18,7 +17,7 @@ The integration uses only the official Personal API at
 
 Tokens are returned as JWT text, retained only in memory, and reacquired when
 less than one hour remains. Changing a profile's key invalidates its cached token.
-Personal keys stay in local IndexedDB and are sent to Garmin for authentication;
+Personal keys stay in local IndexedDB and are sent to the activity service for authentication;
 configuration exports include keys in plain text. Never commit real credentials.
 
 Update fetches all accessible history, at most 100 pages per profile. Distances
@@ -27,15 +26,10 @@ summaries excluded to avoid double counting. A failed profile download preserves
 its cached activities; successful profiles replace their cached API activities,
 including those from the previous integration. Imported activities are retained.
 
-Direct browser requests depend on Garmin allowing the app's origin through CORS.
-Neither Vite builds nor GitHub Pages can override Garmin's CORS policy. A failed
+Direct browser requests depend on the activity service allowing the app's origin through CORS.
+Neither Vite builds nor GitHub Pages can override the activity service's CORS policy. A failed
 network request shows an actionable error; no public proxy or unofficial endpoint
 is used. Authenticated browser operation has not yet been verified.
-
-References:
-- https://developer.garmin.com/gc-developer-program/personal/personal-faq/
-- https://developer.garmin.com/gc-developer-program/personal/swagger-docs/
-- https://github.com/garmin/connect-personal-api-python
 
 ## Development
 
@@ -50,9 +44,9 @@ Tests use synthetic credentials and mocked responses, never live account data.
 
 ## Local browser relay
 
-Garmin rejected a credential-free CORS preflight from `http://127.0.0.1:5173`
+The activity service rejected a credential-free CORS preflight from `http://127.0.0.1:5173`
 with HTTP 403. The Vite development server therefore relays requests through
-`/Challenger/garmin-api` to the two official endpoints listed above. It binds to
+`/Challenger/activity-api` to the two official endpoints listed above. It binds to
 loopback port 5173, checks Host/Origin, strips cookies, and does not store keys.
 Only token POSTs and activity-list GETs are allowed. TLS verification stays enabled.
 
@@ -66,7 +60,7 @@ The Actions workflow builds/tests `main` and deploys only `dist` to GitHub Pages
 In repository Settings > Pages, use **GitHub Actions** as the source.
 Expected URL: https://lankow.github.io/Challenger/
 
-Hosted builds use the configured `VITE_GARMIN_RELAY_URL` for live Garmin updates.
+Hosted builds use the configured `VITE_ACTIVITY_RELAY_URL` for live activity updates.
 Without that variable they remain offline dashboards. Version 2 backups
 include cached activities; version 1 configuration/demo imports remain supported.
 Backups contain credentials in plain text: import them through the browser UI,
@@ -76,5 +70,5 @@ IndexedDB; deploying the app does not publish profiles or create shared storage.
 ## Hosted backend
 
 See [backend/README.md](backend/README.md) for Cloudflare deployment. The backend
-requires no stored Garmin secrets or database; credentials pass through the Worker
+requires no stored service secrets or database; credentials pass through the Worker
 over HTTPS. Its public URL is build configuration, not a secret.

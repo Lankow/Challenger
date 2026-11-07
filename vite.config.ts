@@ -1,14 +1,14 @@
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
-const prefix = '/Challenger/garmin-api';
+const prefix = '/Challenger/activity-api';
 const tokenPath = '/personalapitoken-service/personal-api/personal-api-key/token';
 const activitiesPath = '/activitylist-service/activities/search/activities';
 
 // Development only: same-origin relay, restricted to the two official endpoints.
-function guardGarminRelay(): Plugin {
+function guardActivityRelay(): Plugin {
   return {
-    name: 'guard-garmin-relay',
+    name: 'guard-activity-relay',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         if (!req.url?.startsWith(prefix)) return next();
@@ -29,7 +29,7 @@ function guardGarminRelay(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), guardGarminRelay()],
+  plugins: [react(), guardActivityRelay()],
   base: '/Challenger/',
   server: {
     host: '127.0.0.1', port: 5173, strictPort: true,
@@ -51,7 +51,7 @@ export default defineConfig({
           proxy.on('error', (_error, _req, res) => {
             if ('writeHead' in res && !res.headersSent) {
               res.writeHead(502, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-              res.end(JSON.stringify({ error: 'Local relay could not reach Garmin.' }));
+              res.end(JSON.stringify({ error: 'Local relay could not reach the activity service.' }));
             }
           });
         },

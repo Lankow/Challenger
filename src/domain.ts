@@ -1,4 +1,4 @@
-export type Profile = { id: string; name: string; color: string; garminPersonalKey?: string; clientId?: string; clientSecret?: string; refreshToken?: string; expiresAt?: number; apiKey?: string };
+export type Profile = { id: string; name: string; color: string; personalKey?: string; clientId?: string; clientSecret?: string; refreshToken?: string; expiresAt?: number; apiKey?: string };
 export type Activity = { id: string; profileId: string; name: string; date: string; sport: string; distance: number; seconds: number; source: 'manual' | 'import' | 'app' };
 export const sports = ['Bieganie', 'Rower', 'Pływanie', 'Spacer', 'Inne'];
 export function validateActivity(value: unknown, profileId: string): Activity {
@@ -29,4 +29,15 @@ export function validateChallengeDates({startDate, endDate}: ChallengeDates): vo
 export function challengeActivities(activities: Activity[], {startDate, endDate}: ChallengeDates): Activity[] {
   // ISO calendar dates compare directly, without UTC conversions shifting local days.
   return activities.filter(a => a.source === 'app' && (!startDate || a.date >= startDate) && (!endDate || a.date <= endDate));
+}
+
+// Earlier profiles stored the personal key under a provider-prefixed field.
+export function migrateProfile(profile: Profile): Profile {
+  if (!profile || typeof profile !== 'object') return profile;
+  const legacy = Object.keys(profile).find(key => key.endsWith('PersonalKey'));
+  if (!legacy) return profile;
+  const migrated = { ...profile } as Profile & Record<string, unknown>;
+  migrated.personalKey ??= migrated[legacy] as string;
+  delete migrated[legacy];
+  return migrated;
 }
