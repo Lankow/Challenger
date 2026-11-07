@@ -66,9 +66,15 @@ The Actions workflow builds/tests `main` and deploys only `dist` to GitHub Pages
 In repository Settings > Pages, use **GitHub Actions** as the source.
 Expected URL: https://lankow.github.io/Challenger/
 
-Hosted builds disable live Garmin updates. Run Update locally, export a backup
-from Settings, then import that backup in the hosted app. Version 2 backups
+Hosted builds use the configured `VITE_GARMIN_RELAY_URL` for live Garmin updates.
+Without that variable they remain offline dashboards. Version 2 backups
 include cached activities; version 1 configuration/demo imports remain supported.
 Backups contain credentials in plain text: import them through the browser UI,
 never upload them to the repository. Each browser/origin has its own private
 IndexedDB; deploying the app does not publish profiles or create shared storage.
+
+## Hosted backend
+
+See [backend/README.md](backend/README.md) for Cloudflare deployment. The backend
+requires no stored Garmin secrets or database; credentials pass through the Worker
+over HTTPS. Its public URL is build configuration, not a secret.

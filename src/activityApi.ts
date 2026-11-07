@@ -1,7 +1,7 @@
 import type { Activity, Profile } from './domain';
 
 // Official Personal API: https://developer.garmin.com/gc-developer-program/personal/swagger-docs/
-const BASE = import.meta.env?.DEV ? '/Challenger/garmin-api' : 'https://personal.connectapi.garmin.com';
+const BASE = import.meta.env?.DEV ? '/Challenger/garmin-api' : (import.meta.env?.VITE_GARMIN_RELAY_URL || 'https://personal.connectapi.garmin.com');
 const TOKEN_PATH = '/personalapitoken-service/personal-api/personal-api-key/token';
 const ACTIVITY_PATH = '/activitylist-service/activities/search/activities';
 const PAGE_SIZE = 99;

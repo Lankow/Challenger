@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
-    "test": "tsx --test src/domain.test.ts src/activityApi.test.ts src/configuration.test.ts",
+    "test": "tsx --test src/domain.test.ts src/activityApi.test.ts src/configuration.test.ts backend/worker.test.ts",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
